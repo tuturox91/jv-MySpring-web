@@ -14,7 +14,8 @@ Also, you should add default constructor explicitly if you'll decide to create n
     - method ```UserResponseDto get(Long userId)```, URL: ```GET: /users/{userId} ```. This method should return information about user by user id.
     - method ```List<UserResponseDto> getAll```, URL: ```GET: /users```. This method should return information about all users from DB.
 
-In response let's return ``Users are injected!``
+In response let's return the message ``Users are injected!``
+
 4. Create a `UserMapper` in `service` package, where we're gonna perform all mapping to/from DTOs in order to stick with SRP. Use will use this mapper on the controller layer.
 
 __You can check yourself using this__ [checklist](https://mate-academy.github.io/jv-program-common-mistakes/java-spring/web/java-spring-web)

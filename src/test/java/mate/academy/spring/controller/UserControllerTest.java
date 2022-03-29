@@ -35,14 +35,15 @@ import org.springframework.web.util.NestedServletException;
 public class UserControllerTest {
   private static final String BASE_ENDPOINT = "/users";
   private static final String EXPECTED_INJECT_RESPONSE = "Users are injected!";
+  private static ObjectMapper objectMapper;
   private static List<User> injectedUsers;
   private MockMvc mockMvc;
   @Autowired
   private WebApplicationContext webApplicationContext;
-  private ObjectMapper objectMapper;
 
   @BeforeAll
   static void injectUsers() {
+    objectMapper = new ObjectMapper();
     injectedUsers = new ArrayList<>();
     injectedUsers.add(createUser("John", "Doe"));
     injectedUsers.add(createUser("Emily", "Stone"));
@@ -51,12 +52,11 @@ public class UserControllerTest {
 
   @BeforeEach
   public void setUp() {
-    objectMapper = new ObjectMapper();
     mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
   }
 
   @Test
-  public void get_NonExistentUser_notOk() throws Exception {
+  public void get_NonExistentUser_notOk() {
     assertThrows(NestedServletException.class, () -> {
       sendGetByIdRequest(1L);
     });
@@ -74,14 +74,6 @@ public class UserControllerTest {
     }
   }
 
-  private UserResponseDto sendGetByIdRequest(long id) throws Exception {
-    MvcResult mvcResult = mockMvc
-        .perform(MockMvcRequestBuilders.get(BASE_ENDPOINT + "/" + id))
-        .andReturn();
-    String content = mvcResult.getResponse().getContentAsString();
-    return objectMapper.readValue(content, new TypeReference<>() {});
-  }
-
   @Test
   public void getAll_NoUsers_Ok() throws Exception {
     int expected = 0;
@@ -96,6 +88,14 @@ public class UserControllerTest {
     List<UserResponseDto> actualUsers = getAllUsers();
     assertEquals(injectedUsers.size(), actualUsers.size());
     assertTrue(validUsers(actualUsers));
+  }
+
+  private UserResponseDto sendGetByIdRequest(long id) throws Exception {
+    MvcResult mvcResult = mockMvc
+        .perform(MockMvcRequestBuilders.get(BASE_ENDPOINT + "/" + id))
+        .andReturn();
+    String content = mvcResult.getResponse().getContentAsString();
+    return objectMapper.readValue(content, new TypeReference<>() {});
   }
 
   private boolean validUsers(List<UserResponseDto> actualUsers) {
