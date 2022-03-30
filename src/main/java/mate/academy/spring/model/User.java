@@ -13,15 +13,6 @@ public class User {
     private String firstName;
     private String lastName;
 
-    public User() {
-
-    }
-
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     public Long getId() {
         return id;
     }
@@ -34,8 +25,8 @@ public class User {
         return firstName;
     }
 
-    public void setFirstName(String name) {
-        this.firstName = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -49,8 +40,8 @@ public class User {
     @Override
     public String toString() {
         return "User{"
-                + "id=" + id
-                + ", name='" + firstName + '\''
-                + ", lastName='" + lastName + '\'' + '}';
+            + "id=" + id
+            + ", firstName='" + firstName + '\''
+            + ", lastName='" + lastName + '\'' + '}';
     }
 }
