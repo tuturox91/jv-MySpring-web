@@ -19,4 +19,6 @@ In response let's return the message ``Users are injected!``
 
 4. Create a `UserMapper` in `service` package, where we're gonna perform all mapping to/from DTOs in order to stick with SRP. Use will use this mapper on the controller layer.
 
+4. Run tests (in this project, tests do not run automatically when running mvn clean package, you need to run them manually).
+
 __You can check yourself using this__ [checklist](https://mate-academy.github.io/jv-program-common-mistakes/java-spring/web/java-spring-web)
